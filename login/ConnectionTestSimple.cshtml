@@ -1,0 +1,73 @@
+﻿@page
+@model login.Pages.ConnectionTestSimpleModel
+@{
+    ViewData["Title"] = "Tes Koneksi Database";
+}
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h1 class="h4 mb-0">Tes Koneksi Database Oracle</h1>
+        </div>
+        <div class="card-body">
+            <h5>Connection String (disembunyikan):</h5>
+            <div class="alert alert-secondary">
+                <code>@Model.ConnectionString</code>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.TestResult))
+            {
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle me-2"></i> <strong>Sukses!</strong> @Model.TestResult
+                </div>
+            }
+
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle me-2"></i> <strong>Error!</strong>
+                    <pre class="mt-2 mb-0" style="white-space: pre-wrap;">@Model.ErrorMessage</pre>
+                </div>
+
+                <h5 class="mt-4">Langkah Troubleshooting:</h5>
+                <ol>
+                    <li>Periksa username dan password database Oracle</li>
+                    <li>Pastikan host, port, dan service name benar</li>
+                    <li>Periksa apakah database Oracle dapat diakses dari server aplikasi</li>
+                    <li>Verifikasi Oracle Client dan Oracle Data Provider sudah terinstall dengan benar</li>
+                    <li>Pastikan format connection string sesuai dengan versi Oracle database</li>
+                </ol>
+
+                <div class="alert alert-info">
+                    <strong>Tips:</strong> Coba tes koneksi menggunakan SQL*Plus atau SQL Developer terlebih dahulu
+                </div>
+            }
+
+            @if (Model.TableNames.Any())
+            {
+                <div class="mt-4">
+                    <h5>Daftar Tabel (@Model.TableCount tabel):</h5>
+                    <div class="border p-3 rounded" style="max-height: 300px; overflow-y: auto;">
+                        <ul class="list-group">
+                            @foreach (var table in Model.TableNames)
+                            {
+                                <li class="list-group-item @(table == "CUST_TRACKING" ? "list-group-item-success" : "")">
+                                    @table @(table == "CUST_TRACKING" ? "<strong>(Tabel yang dicari)</strong>" : "")
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+
+            <div class="mt-4">
+                <a href="/ConnectionTestSimple" class="btn btn-primary me-2">
+                    <i class="fas fa-sync me-2"></i> Tes Ulang
+                </a>
+                <a href="/" class="btn btn-outline-secondary">
+                    <i class="fas fa-home me-2"></i> Halaman Utama
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

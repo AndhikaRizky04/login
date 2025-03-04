@@ -1,0 +1,40 @@
+﻿@{
+    var currentPage = ViewContext.RouteData.Values["page"].ToString().Split("/").Last();
+}
+
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <div class="logo">
+            <i class="fas fa-cube"></i>
+            <span>Dashboard Tracking</span>
+        </div>
+    </div>
+
+    <nav class="nav-menu">
+        <a href="/Dashboard" class="nav-link @(currentPage == "Dashboard" ? "active" : "")">
+            <i class="fas fa-home"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="/Track" class="nav-link @(currentPage == "Track" ? "active" : "")">
+            <i class="fas fa-truck"></i>
+            <span>Tracking Produk</span>
+        </a>
+        <a href="/ECatalog" class="nav-link @(currentPage == "ECatalog" ? "active" : "")">
+            <i class="fas fa-store"></i>
+            <span>E-Catalog</span>
+        </a>
+        <a href="/Complaint" class="nav-link @(currentPage == "Complaint" ? "active" : "")">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>Pengaduan</span>
+        </a>
+        <a href="/History" class="nav-link @(currentPage == "History" ? "active" : "")">
+            <i class="fas fa-history"></i>
+            <span>Riwayat Pengaduan</span>
+        </a>
+    </nav>
+
+    <a href="/Logout" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+    </a>
+</aside>

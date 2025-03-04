@@ -1,0 +1,245 @@
+﻿@page
+@model login.Pages.ProductCatalogModel
+@using login.Models
+@{
+    ViewData["Title"] = "E-Catalog Produk";
+}
+
+<div class="container-fluid p-4" style="background-color: #f0f5ff;">
+    <!-- Header dengan tombol kembali -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="d-flex align-items-center">
+                <a href="/Welcome" class="btn btn-primary me-3" style="background-color: #5c67ff; border: none;">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </a>
+                <h2 class="mb-0">E-Catalog Produk</h2>
+            </div>
+        </div>
+        <div class="col-md-4 text-end text-muted">
+            @Model.CurrentTime
+        </div>
+    </div>
+
+    <!-- Form Pencarian -->
+    <div class="row mb-4">
+        <div class="col">
+            <form method="get" class="d-flex">
+                <input type="text" name="SearchTerm" class="form-control me-2"
+                       placeholder="Cari berdasarkan Nama Produk, Nomor PO, atau Nomor PO INT"
+                       value="@Model.SearchTerm">
+                <button type="submit" class="btn btn-primary px-4" style="width: 120px; background-color: #5c67ff; border: none;">
+                    <i class="fas fa-search"></i> Cari
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pesan Error jika ada -->
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-warning mb-4">
+            <i class="fas fa-exclamation-circle me-2"></i> @Model.ErrorMessage
+        </div>
+    }
+
+    <!-- Grid Produk -->
+    @if (Model.Products.Any())
+    {
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            @foreach (var product in Model.Products)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <!-- Gambar Produk -->
+                        <img src="@GetProductImageUrl(product)" class="card-img-top p-3" alt="@product.NamaJob"
+                             style="height: 200px; object-fit: contain;">
+
+                        <div class="card-body">
+                            <h5 class="card-title">@product.NoPo</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">@product.NamaJob</h6>
+
+                            <div class="mb-2">
+                                <strong>Customer:</strong> @product.Nama
+                            </div>
+
+                            @if (!string.IsNullOrEmpty(product.PoInt))
+                            {
+                                <div class="mb-2">
+                                    <strong>Nomor INT:</strong> @product.PoInt
+                                </div>
+                            }
+
+                            @if (!string.IsNullOrEmpty(product.NoJob))
+                            {
+                                <div class="mb-2">
+                                    <strong>No. Job:</strong> @product.NoJob
+                                </div>
+                            }
+
+                            <!-- Progress Bar -->
+                            <div class="mt-3">
+                                @{
+                                    var progress = product.CalculateProgress();
+                                    var progressText = product.GetProgressStatus();
+                                }
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span>Progress: @progressText</span>
+                                    <span>@Math.Round(progress)%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar @product.GetProgressColorClass()"
+                                         role="progressbar"
+                                         style="width: @progress%"
+                                         aria-valuenow="@progress"
+                                         aria-valuemin="0"
+                                         aria-valuemax="100">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Footer dengan Tombol -->
+                        <div class="card-footer bg-white d-flex">
+                            <button class="btn btn-sm btn-outline-primary me-2 flex-grow-1"
+                                    onclick="showProductImage('@GetProductImageUrl(product)', '@(product.NamaJob ?? product.NoPo)')">
+                                <i class="fas fa-image"></i> Lihat Gambar
+                            </button>
+
+                            @{
+                                // Gunakan PoInt jika tersedia, jika tidak gunakan NoPo
+                                string poParam = !string.IsNullOrEmpty(product.PoInt) ? product.PoInt : product.NoPo;
+                                // Gunakan NoJob jika tersedia, jika tidak biarkan kosong
+                                string idParam = !string.IsNullOrEmpty(product.NoJob) ? product.NoJob : "";
+                            }
+
+                            <!-- Link detail produk dengan robust fallback -->
+                            <a href="/Track?no_po=@poParam@(!string.IsNullOrEmpty(idParam) ? "&id=" + idParam : "")"
+                               class="btn btn-sm btn-outline-info flex-grow-1">
+                                <i class="fas fa-info-circle"></i> Detail Produk
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <!-- Tampilan jika tidak ada produk -->
+        <div class="text-center py-5">
+            <i class="fas fa-box-open fa-4x text-muted mb-3"></i>
+            <h4 class="text-muted">Tidak ada produk yang ditemukan</h4>
+            <p class="text-muted">Coba ubah kata kunci pencarian atau hubungi administrator.</p>
+        </div>
+    }
+</div>
+
+<!-- Modal untuk menampilkan gambar -->
+<div class="modal fade" id="productImageModal" tabindex="-1" aria-labelledby="productImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productImageModalLabel">Gambar Produk</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modalProductImage" src="" class="img-fluid" alt="Product Image">
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    // Fungsi untuk menentukan URL gambar produk berdasarkan nama produk
+    public string GetProductImageUrl(login.Models.ProductCatalogViewModel product)
+    {
+        string namaJob = (product.NamaJob ?? "").ToLower();
+        string noPo = (product.NoPo ?? "").ToLower();
+        string poInt = (product.PoInt ?? "").ToLower();
+
+        // Kasus khusus untuk PO011000000000053956
+        if (poInt.Equals("po011000000000053956", StringComparison.OrdinalIgnoreCase))
+        {
+            return "/images/products/gue.jpeg";
+        }
+
+        if (namaJob.Contains("box") || namaJob.Contains("kotak"))
+        {
+            if (namaJob.Contains("white") || namaJob.Contains("putih"))
+            {
+                return "/images/products/box-white.jpg";
+            }
+            return "/images/products/box.jpg";
+        }
+        else if (namaJob.Contains("flute") || namaJob.Contains("sq"))
+        {
+            if (namaJob.Contains("milk") || namaJob.Contains("susu") || namaJob.Contains("choco"))
+            {
+                return "/images/products/flute-milk.jpg";
+            }
+            else if (namaJob.Contains("tea") || namaJob.Contains("teh") || namaJob.Contains("green"))
+            {
+                return "/images/products/flute-tea.jpg";
+            }
+            else
+            {
+                return "/images/products/flute.jpg";
+            }
+        }
+        else if (namaJob.Contains("wrapper") || namaJob.Contains("cashew"))
+        {
+            return "/images/products/wrapper.jpg";
+        }
+        else if (namaJob.Contains("wafer") || namaJob.Contains("selamat"))
+        {
+            return "/images/products/wafer.jpg";
+        }
+        else if (namaJob.Contains("cocoa") || namaJob.Contains("powder"))
+        {
+            return "/images/products/cocoa.jpg";
+        }
+        else
+        {
+            // Fallback ke default berdasarkan pola nomor PO
+            if (noPo.StartsWith("p0007"))
+            {
+                return "/images/products/flute.jpg";
+            }
+            else if (noPo.StartsWith("p0006"))
+            {
+                return "/images/products/wafer.jpg";
+            }
+            else if (noPo.StartsWith("p0005"))
+            {
+                return "/images/products/box.jpg";
+            }
+            else if (noPo.StartsWith("p0004"))
+            {
+                return "/images/products/wrapper.jpg";
+            }
+            else
+            {
+                return "/images/products/default.jpg";
+            }
+        }
+    }
+}
+
+@section Scripts {
+    <script>
+        // Fungsi untuk menampilkan gambar dalam modal
+        function showProductImage(imageUrl, productName) {
+            document.getElementById('modalProductImage').src = imageUrl;
+            document.getElementById('productImageModalLabel').innerText = productName;
+
+            var myModal = new bootstrap.Modal(document.getElementById('productImageModal'));
+            myModal.show();
+        }
+
+        // Inisialisasi tooltips
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+}

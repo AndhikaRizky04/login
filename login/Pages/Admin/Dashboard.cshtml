@@ -1,0 +1,310 @@
+﻿@page
+@model login.Pages.Admin.DashboardModel
+@{
+    ViewData["Title"] = "Dashboard Tracking";
+}
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Tracking</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #F5F7FF;
+        }
+
+        .sidebar {
+            width: 210px;
+            height: 100vh;
+            position: fixed;
+            background: white;
+            color: #4A55A2;
+            padding: 20px;
+            border-radius: 0 20px 20px 0;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+            .sidebar-header i {
+                color: #4A55A2;
+                font-size: 24px;
+                margin-right: 10px;
+            }
+
+        .sidebar a {
+            color: #6c757d;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: 0.3s;
+        }
+
+            .sidebar a i {
+                margin-right: 15px;
+                width: 20px;
+                text-align: center;
+            }
+
+            .sidebar a:hover, .sidebar a.active {
+                background: #EEF2FF;
+                color: #4A55A2;
+            }
+
+        .content {
+            margin-left: 210px;
+            padding: 20px;
+        }
+
+        .welcome-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+            .welcome-card h2 {
+                color: #4A55A2;
+                font-size: 24px;
+                margin-bottom: 5px;
+            }
+
+        .info-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            height: 100%;
+        }
+
+            .info-card h5 {
+                color: #6c757d;
+                font-size: 16px;
+                margin-bottom: 15px;
+            }
+
+            .info-card .value {
+                color: #4A55A2;
+                font-size: 18px;
+                font-weight: 500;
+                margin-bottom: 10px;
+            }
+
+        .badge {
+            font-size: 12px;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+
+        .quick-actions {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+            .quick-actions h4 {
+                color: #6c757d;
+                font-size: 18px;
+                margin-bottom: 20px;
+            }
+
+        .action-btn {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            color: #6c757d;
+            text-decoration: none;
+            border: none;
+            background: transparent;
+            transition: 0.3s;
+        }
+
+            .action-btn i {
+                margin-right: 10px;
+                width: 20px;
+                text-align: center;
+            }
+
+            .action-btn:hover {
+                color: #4A55A2;
+                background: #EEF2FF;
+                border-radius: 8px;
+            }
+
+        .logout-btn {
+            margin-top: auto;
+            background: #FF4B4B;
+            color: white !important;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+            .logout-btn:hover {
+                background: #D43F3F;
+            }
+
+        .icon-container {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .profile-icon {
+            background-color: #EEF2FF;
+            color: #4A55A2;
+        }
+
+        .session-icon {
+            background-color: #EEF2FF;
+            color: #4A55A2;
+        }
+
+        .security-icon {
+            background-color: #EEF2FF;
+            color: #4A55A2;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 12px;
+            background-color: #EEF2FF;
+            color: #4A55A2;
+        }
+    </style>
+</head>
+<body>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-cube"></i>
+                    <span>Dashboard Tracking</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a asp-page="/Track" class="nav-link">
+                    <i class="fas fa-truck"></i>
+                    <span>Tracking Produk</span>
+                </a>
+                <a asp-page="/ProductCatalog" class="nav-link">
+                    <i class="fas fa-store"></i>
+                    <span>E-Catalog</span>
+                </a>
+                <a asp-page="/Complaint" class="nav-link">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Pengaduan</span>
+                </a>
+                <a asp-page="/History" class="nav-link">
+                    <i class="fas fa-history"></i>
+                    <span>Riwayat Pengaduan</span>
+                </a>
+            </nav>
+
+            <a asp-page="/Account/Logout" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </aside>
+
+    <div class="content">
+        <div class="container-fluid mt-4">
+            <div class="welcome-card">
+                <h2>Selamat Datang, @User.Identity.Name!</h2>
+                <p class="text-muted"><i class="fas fa-calendar-alt me-2"></i> @DateTime.Now.ToString("dddd, dd MMMM yyyy - HH:mm:ss")</p>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-4 mb-3">
+                    <div class="info-card">
+                        <div class="icon-container profile-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h5>Profile</h5>
+                        <div class="value">@User.Identity.Name</div>
+                        <span class="status-badge">Active</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="info-card">
+                        <div class="icon-container session-icon">
+                            <i class="fas fa-circle-check"></i>
+                        </div>
+                        <h5>Session Info</h5>
+                        <div class="value">Active</div>
+                        <span class="status-badge">Connected</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="info-card">
+                        <div class="icon-container security-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h5>Security Status</h5>
+                        <div class="value">Protected</div>
+                        <span class="status-badge">Secured</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <h4>Quick Actions</h4>
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-search"></i> Track Order
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-shopping-cart"></i> Lihat E-Catalog
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-headset"></i> Layanan Pengaduan
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-history"></i> Riwayat Pengaduan
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

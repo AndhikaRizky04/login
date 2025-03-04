@@ -1,0 +1,97 @@
+﻿@page
+@model login.Pages.IndexModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">Login</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="LoginInput.Username" class="form-label">Username</label>
+                            <input asp-for="LoginInput.Username" class="form-control" placeholder="Masukkan username" />
+                            <span asp-validation-for="LoginInput.Username" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="LoginInput.Password" class="form-label">Password</label>
+                            <div class="password-container">
+                                <input asp-for="LoginInput.Password" class="form-control" placeholder="Masukkan password" />
+                                <button type="button" class="toggle-password" id="togglePassword">
+                                    <i class="fas fa-eye-slash" id="eyeIcon"></i>
+                                </button>
+                            </div>
+                            <span asp-validation-for="LoginInput.Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input asp-for="LoginInput.RememberMe" class="form-check-input" />
+                            <label asp-for="LoginInput.RememberMe" class="form-check-label">Remember me</label>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .password-container {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            color: #526D82;
+        }
+
+            .toggle-password:focus {
+                outline: none;
+            }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.querySelector('input[type="password"]');
+            const eyeIcon = document.getElementById('eyeIcon');
+
+            togglePassword.addEventListener('click', function () {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    eyeIcon.classList.remove('fa-eye-slash');
+                    eyeIcon.classList.add('fa-eye');
+                } else {
+                    passwordInput.type = 'password';
+                    eyeIcon.classList.remove('fa-eye');
+                    eyeIcon.classList.add('fa-eye-slash');
+                }
+            });
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,228 @@
+﻿@page
+@using login.Models  
+@model TrackModel
+@{
+    ViewData["Title"] = "Status Produksi Produk";
+}
+
+<div class="main-content">
+    <h1 class="text-center mb-4">Status Produksi Produk</h1>
+
+    <!-- Form Pencarian -->
+    <form method="get" class="search-form mb-4">
+        <div class="input-group">
+            <input type="text" name="no_po" class="form-control"
+                   placeholder="Masukkan Nomor PO"
+                   value="@Model.PoNumber">
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-search"></i> Cari
+            </button>
+        </div>
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger">
+            @Model.ErrorMessage
+        </div>
+    }
+
+    @if (!Model.ShowProductDetail && Model.Products.Count > 0)
+    {
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>
+                    @(string.IsNullOrEmpty(Model.PoNumber)
+                        ? "Semua Produk"
+                        : $"Daftar Produk dengan PO: {Model.PoNumber}")
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-progress">
+                        <thead>
+                            <tr>
+                                <th>NO</th>
+                                <th>NAMA JOB</th>
+                                <th>CUSTOMER</th>
+                                <th>NO. PO</th>
+                                <th>PO INT</th>
+                                <th>AKSI</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.Products.Count; i++)
+                            {
+                                var prod = Model.Products[i];
+                                <tr>
+                                    <td>@(i + 1)</td>
+                                    <td>@prod.NAMA_JOB</td>
+                                    <td>@prod.NAMA</td>
+                                    <td>@prod.NO_PO</td>
+                                    <td>@prod.PO_INT</td>
+                                    <td>
+                                        <a asp-page="Track"
+                                           asp-route-no_po="@prod.PO_INT"
+                                           asp-route-id="@prod.NO_JOB"
+                                           class="btn btn-primary btn-sm">
+                                            <i class="fas fa-eye"></i> Detail
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.ShowProductDetail && Model.CurrentProduct != null)
+    {
+        var product = Model.CurrentProduct;
+        var progress = product.CalculateProgress();
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Detail Informasi Produk</h5>
+            </div>
+            <div class="card-body">
+                <!-- Informasi Dasar Produk -->
+                <div class="bg-light p-3 rounded mb-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Nomor PO INT:</strong> @product.PO_INT</p>
+                            <p><strong>Nama Job:</strong> @product.NAMA_JOB</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Customer:</strong> @product.NAMA</p>
+                            <p><strong>NO. PO:</strong> @product.NO_PO</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detail Estimasi -->
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-3">Detail Pengerjaan</h5>
+                                <div class="alert alert-info">
+                                    <h6 class="mb-2"><i class="fas fa-clock"></i> Status Pengerjaan:</h6>
+                                    <p class="mb-1">Jumlah pesanan: <strong>@product.OPLAAG.ToString("N0") produk</strong></p>
+                                    <p class="mb-1">Sudah terkirim: <strong>@product.TERKIRIM.ToString("N0") produk</strong></p>
+
+                                    @{
+                                        decimal remainingQuantity = Math.Max(0, product.OPLAAG - product.TERKIRIM);
+                                    }
+                                    <p class="mb-1">Sisa pengerjaan: <strong>@remainingQuantity.ToString("N0") produk</strong></p>
+
+                                    <p class="mb-1">Progress: <strong>@progress.ToString("N1")%</strong></p>
+                                </div>
+                                <div class="timeline mt-4">
+                                    <div class="timeline-item">
+                                        <i class="fas fa-play-circle text-success"></i>
+                                        <span>Mulai Pengerjaan</span>
+                                    </div>
+                                    <div class="timeline-line">
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" role="progressbar"
+                                                 style="width: @progress%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <i class="fas fa-flag-checkered text-primary"></i>
+                                        <span>Selesai</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Pengerjaan -->
+                <h3 class="progress-title">Status Pengerjaan</h3>
+                <div class="table-responsive">
+                    <table class="table table-progress">
+                        <thead>
+                            <tr>
+                                <th>Tahapan</th>
+                                <th>Jumlah Produk</th>
+                                <th width="40%">Status</th>
+                                <th>Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var step in Model.TrackingSteps)
+                            {
+                                var propertyInfo = typeof(ProductTracking).GetProperty(step.Key);
+                                if (propertyInfo != null)
+                                {
+                                    decimal quantity = (decimal)propertyInfo.GetValue(product);
+                                    decimal progressPercentage = product.OPLAAG > 0 ?
+                                    Math.Min(100, (quantity / product.OPLAAG) * 100) : 0;
+                                    string badgeColor = ProductTracking.GetProgressColor(progressPercentage);
+
+                                    <tr class="align-middle">
+                                        <td>
+                                            <span class="step-name">@step.Label</span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="quantity-value">@quantity.ToString("N0")</span>
+                                        </td>
+                                        <td>
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar"
+                                                     style="width: @progressPercentage%; background-color: @badgeColor"
+                                                     aria-valuenow="@progressPercentage"
+                                                     aria-valuemin="0"
+                                                     aria-valuemax="100">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="progress-badge" style="background-color: @badgeColor">
+                                                @progressPercentage.ToString("N1")%
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="mt-4">
+                    <a asp-page="Track" asp-route-no_po="@product.PO_INT"
+                       class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Kembali ke Daftar
+                    </a>
+                    <a href="#" onclick="window.print();" class="btn btn-primary">
+                        <i class="fas fa-print me-2"></i> Cetak Progress
+                    </a>
+                    <a href="#" class="btn btn-danger">
+                        <i class="fas fa-exclamation-circle"></i> Ajukan Pengaduan
+                    </a>
+                    <a href="#" class="btn btn-danger">
+                        <i class="fas fa-shop"></i> Pergi ke E-Catalog
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.Products.Count == 0)
+    {
+        <div class="alert alert-info" role="alert">
+            <i class="fas fa-info-circle"></i>
+            Silakan masukkan Nomor PO untuk melacak produk.
+        </div>
+    }
+
+    @section Styles {
+        <link rel="stylesheet" href="~/css/track.css" />
+    }
+
+    @section Scripts {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    }
+</div>

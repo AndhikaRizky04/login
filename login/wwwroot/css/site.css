@@ -1,0 +1,633 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+/* Tambahan untuk halaman login */
+.card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    padding: 15px;
+}
+
+.btn-primary {
+    width: 100%;
+}
+/* Responsive base font size */
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+/* Focus states */
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+/* Body layout */
+body {
+    margin-bottom: 60px;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f6f9;
+    color: #333;
+}
+
+/* Container styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: 250px;
+    background: #ffffff;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    transition: width 0.3s ease;
+    z-index: 1000;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.logo {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #5a6acb;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    text-decoration: none;
+    color: #6b7280;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    transition: all 0.3s ease;
+}
+
+    .sidebar-menu a i {
+        margin-right: 10px;
+        font-size: 1.1rem;
+    }
+
+    .sidebar-menu a:hover,
+    .sidebar-menu a.active {
+        background: #5a6acb;
+        color: #ffffff;
+    }
+
+/* Container adjustment when sidebar is present */
+.container {
+    margin-left: 270px;
+    width: calc(100% - 270px);
+}
+
+/* Hide regular navbar when sidebar is active */
+.navbar {
+    display: none;
+}
+
+/* Login page specific styles */
+.card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    padding: 15px;
+}
+
+.btn-primary {
+    width: 100%;
+    background-color: #5a6acb;
+    border-color: #5a6acb;
+    transition: all 0.3s ease;
+}
+
+    .btn-primary:hover {
+        background-color: #4a5ab3;
+        border-color: #4a5ab3;
+    }
+
+/* Modal styles */
+.modal-content {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.modal-title {
+    font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 60px;
+    }
+
+    .sidebar-menu a span {
+        display: none;
+    }
+
+    .container {
+        margin-left: 80px;
+        width: calc(100% - 80px);
+        padding: 10px;
+    }
+
+    html {
+        font-size: 14px;
+    }
+}
+
+/* Base styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f6f9;
+}
+
+/* Timeline styles */
+.timeline {
+    position: relative;
+    padding: 20px 0;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+    .timeline-item i {
+        margin-right: 10px;
+    }
+
+.timeline-line {
+    padding: 10px 0;
+}
+
+    .timeline-line .progress {
+        height: 8px;
+        border-radius: 4px;
+    }
+
+.progress-badge {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    color: white;
+    font-weight: 500;
+    font-size: 0.875rem;
+    min-width: 80px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.table-progress thead th {
+    background-color: #5a6acb;
+    color: white;
+    font-weight: 500;
+    padding: 1rem;
+    border: none;
+}
+
+.table-progress {
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.badge {
+    font-weight: 500;
+    padding: 0.5em 0.75em;
+}
+
+/* Main content */
+.main-content {
+    padding: 30px;
+    min-height: 100vh;
+}
+
+/* Buttons */
+.btn {
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: #5a6acb;
+    border-color: #5a6acb;
+}
+
+    .btn-primary:hover {
+        background: #4559c9;
+        border-color: #4559c9;
+        transform: translateY(-1px);
+    }
+
+/* Search form */
+.search-form {
+    margin-bottom: 30px;
+}
+
+    .search-form .input-group {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .search-form input {
+        border: none;
+        padding: 15px 20px;
+        font-size: 1rem;
+    }
+
+    .search-form button {
+        padding: 15px 30px;
+        font-weight: 500;
+    }
+
+/* Progress indicators */
+.badge {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+.progress-value {
+    font-weight: 600;
+    color: #5a6acb;
+    min-width: 45px;
+    text-align: right;
+}
+
+: 4px;
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+.estimasi-details {
+    padding: 10px;
+}
+
+.alert-info {
+    background-color: rgba(0, 123, 255, 0.1);
+    border: none;
+    border-radius: 10px;
+}
+
+.quantity-value {
+    font-weight: 600;
+    color: #5a6acb;
+    font-size: 0.95rem;
+}
+
+.step-name {
+    font-weight: 500;
+    color: #4a5568;
+}
+
+.table-progress td {
+    padding: 1rem 0.75rem;
+}
+
+.table-progress .progress {
+    height: 8px;
+    background-color: #edf2f7;
+    border-radius
+}
+/* Styles untuk E-Catalog */
+
+/* Card animasi dan efek hover */
+.product-card {
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+    }
+
+.product-image {
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
+
+/* Progress bar custom */
+.progress {
+    background-color: #f0f0f0;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    transition: width 1s ease-in-out;
+    border-radius: 20px;
+}
+
+/* Badge PT CERES khusus */
+.pt-ceres-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ffc107;
+    color: #343a40;
+    padding: 0.5rem 0.75rem;
+    border-radius: 20px;
+    font-weight: 600;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+}
+
+/* Animasi loading untuk konten */
+@keyframes shimmer {
+    0% {
+        background-position: -468px 0;
+    }
+
+    100% {
+        background-position: 468px 0;
+    }
+}
+
+.loading {
+    background: linear-gradient(to right, #f6f7f8 8%, #edeef1 18%, #f6f7f8 33%);
+    background-size: 800px 104px;
+    animation: shimmer 1.5s infinite linear;
+    border-radius: 5px;
+    height: 15px;
+    margin-bottom: 10px;
+}
+
+/* Warna untuk status progress */
+.status-baru {
+    color: #dc3545;
+}
+
+.status-proses {
+    color: #ffc107;
+}
+
+.status-hampir {
+    color: #17a2b8;
+}
+
+.status-selesai {
+    color: #28a745;
+}
+
+/* Efek paginasi */
+.pagination .page-item .page-link {
+    border-radius: 50%;
+    margin: 0 3px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+/* Badge khusus untuk produk PT CERES */
+.badge-pt-ceres {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: linear-gradient(135deg, #ffc107, #ff9800);
+    color: #fff;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(255, 193, 7, 0.3);
+    z-index: 2;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 193, 7, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
+    }
+}
+
+
+/*STYLE Catalog*/
+
+/* Styles untuk halaman E-Catalog */
+
+/* Card produk */
+.card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+    }
+
+.card-img-top {
+    transition: transform 0.3s;
+}
+
+.card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+/* Progress bar custom */
+.progress {
+    height: 10px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+}
+
+.progress-bar {
+    transition: width 0.6s ease;
+}
+
+/* Search box styling */
+.form-control:focus {
+    border-color: #6c63ff;
+    box-shadow: 0 0 0 0.2rem rgba(108, 99, 255, 0.25);
+}
+
+.btn-primary {
+    background-color: #6c63ff;
+    border-color: #6c63ff;
+}
+
+    .btn-primary:hover {
+        background-color: #5a52e0;
+        border-color: #5a52e0;
+    }
+
+/* Back button styling */
+.btn-back {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+    color: #6c757d;
+    transition: all 0.2s;
+}
+
+    .btn-back:hover {
+        background-color: #e2e6ea;
+        border-color: #dae0e5;
+        color: #343a40;
+    }
+
+/* Product card footer */
+.card-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 0.75rem 1.25rem;
+}
+
+/* Customer badges */
+.customer-badge {
+    display: inline-block;
+    padding: 0.25em 0.6em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+    .customer-badge.ceres {
+        background-color: #e3f2fd;
+        color: #0d6efd;
+    }
+
+/* Modal styling */
+.modal-content {
+    border-radius: 12px;
+    border: none;
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Loading indicator */
+.loading-spinner {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .card-title {
+        font-size: 1.1rem;
+    }
+
+    .card-subtitle {
+        font-size: 0.9rem;
+    }
+}
+
+.card-img-top {
+    transition: transform 0.3s ease;
+    height: 200px;
+    object-fit: contain;
+    padding: 1rem;
+}
+
+.card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.modal-content {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+    .modal-body img {
+        max-height: 70vh;
+        object-fit: contain;
+    }

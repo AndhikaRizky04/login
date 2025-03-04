@@ -1,0 +1,180 @@
+﻿:root {
+    --primary-color: #4A55A2;
+    --secondary-color: #7895CB;
+    --accent-color: #A0BFE0;
+    --background-start: #F5F7FF;
+    --background-end: #C6D7F6;
+    --text-primary: #2C3333;
+    --text-secondary: #526D82;
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --success: #27A269;
+    --warning: #E5A443;
+    --danger: #E64553;
+}
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+    gap: 2rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--background-start), var(--background-end));
+}
+
+.main-content {
+    flex: 1;
+    padding: 1rem;
+}
+
+.complaint-header {
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 32px rgba(74, 85, 162, 0.1);
+}
+
+.welcome-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.welcome-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.date-display {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.complaint-form {
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(74, 85, 162, 0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+        font-weight: 500;
+    }
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(74, 85, 162, 0.2);
+    border-radius: 12px;
+    background: white;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(74, 85, 162, 0.1);
+        outline: none;
+    }
+
+    .form-control[readonly] {
+        background-color: rgba(74, 85, 162, 0.05);
+    }
+
+textarea.form-control {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.btn-submit {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+    .btn-submit:hover {
+        background: var(--secondary-color);
+        transform: translateY(-2px);
+    }
+
+.alert {
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+}
+
+.alert-success {
+    background: rgba(39, 162, 105, 0.1);
+    color: var(--success);
+    border: 1px solid var(--success);
+}
+
+.alert-danger {
+    background: rgba(230, 69, 83, 0.1);
+    color: var(--danger);
+    border: 1px solid var(--danger);
+}
+
+.file-input-wrapper {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.file-input-button {
+    background: var(--secondary-color);
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+    .file-input-button:hover {
+        background: var(--primary-color);
+    }
+
+input[type="file"] {
+    position: absolute;
+    left: -9999px;
+}
+
+#file-name {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .welcome-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}

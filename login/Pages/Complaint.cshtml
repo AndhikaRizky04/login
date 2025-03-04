@@ -1,0 +1,104 @@
+﻿@page
+@model ComplaintsModel
+@{
+    ViewData["Title"] = "Form Pengaduan";
+    var currentTime = DateTime.Now.ToString("dddd, dd MMMM yyyy - HH:mm:ss");
+}
+
+<div class="dashboard-container">
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="complaint-header">
+            <div class="welcome-header">
+                <h1 class="welcome-title">Form Pengaduan</h1>
+                <div class="date-display">
+                    <i class="far fa-clock"></i>
+                    <span>@currentTime</span>
+                </div>
+            </div>
+        </section>
+
+        @if (!string.IsNullOrEmpty(Model.Message))
+        {
+            <div class="@Model.AlertClass">@Html.Raw(Model.Message)</div>
+        }
+
+        <div class="complaint-form">
+            <form method="post" enctype="multipart/form-data" id="complaintForm">
+                <input type="hidden" asp-for="Complaint.ComplaintNumber" value="@Model.ComplaintNumber" />
+
+                <div class="form-group">
+                    <label>Nomor Pengaduan:</label>
+                    <input type="text" class="form-control" value="@Model.ComplaintNumber" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label>Nama PT:</label>
+                    <input type="text" class="form-control" asp-for="Complaint.Username" value="@User.Identity.Name" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label>Tanggal Pengaduan:</label>
+                    <input type="text" class="form-control" asp-for="Complaint.CreatedAt" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label>Nama Pengguna:</label>
+                    <input type="text" class="form-control" asp-for="Complaint.CompanyName" required />
+                </div>
+
+                <div class="form-group">
+                    <label>Nomor PO:</label>
+                    <input type="text" class="form-control" id="no_po" asp-for="Complaint.NoPO" required />
+                </div>
+
+                <div class="form-group">
+                    <label>Nama Produk:</label>
+                    <select class="form-control" id="product_name" asp-for="Complaint.ProductName" asp-items="Model.ProductList">
+                        <option value="">Pilih Nama Produk</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="contact_person">Contact Person</label>
+                    <input type="text" id="contact_person" asp-for="Complaint.ContactPerson" class="form-control" placeholder="Masukkan nomor kontak valid" required />
+                </div>
+
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" class="form-control" asp-for="Complaint.Email" placeholder="Masukkan alamat email valid" required />
+                </div>
+
+                <div class="form-group">
+                    <label>Subjek Pengaduan:</label>
+                    <input type="text" class="form-control" asp-for="Complaint.Subject" placeholder="Masukkan subjek pengaduan" required />
+                </div>
+
+                <div class="form-group">
+                    <label>Deskripsi Pengaduan:</label>
+                    <textarea class="form-control" asp-for="Complaint.Description" rows="5" placeholder="Jelaskan masalah Anda" required></textarea>
+                </div>
+
+                <div class="form-group">
+    <label>Unggah File (Opsional):</label>
+    <div class="file-input-wrapper">
+        <label for="file" class="file-input-button">
+            <i class="fas fa-cloud-upload-alt"></i> Pilih File
+        </label>
+        <input type="file" id="file" asp-for="UploadedFile" accept=".pdf,.jpg,.jpeg,.png" />
+    </div>
+    <small class="form-text text-muted">Format yang diperbolehkan: PDF, JPG, JPEG, PNG (maks. 5MB).</small>
+    <span id="file-name"></span>
+</div>
+
+                <button type="submit" class="btn-submit" asp-page-handler="Submit">
+                    <i class="fas fa-paper-plane"></i> Kirim Pengaduan
+                </button>
+            </form>
+        </div>
+    </main>
+</div>
+
+@section Scripts {
+    <script src="~/js/complaintForm.js"></script>
+}

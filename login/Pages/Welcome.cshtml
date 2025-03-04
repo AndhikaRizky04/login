@@ -1,0 +1,402 @@
+﻿@page
+@model WelcomeModel
+@{
+    ViewData["Title"] = "Dashboard Tracking";
+}
+
+<div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-cube"></i>
+                <span>Dashboard Tracking</span>
+            </div>
+        </div>
+
+        <nav class="nav-menu">
+            <a asp-page="/Track" class="nav-link">
+                <i class="fas fa-truck"></i>
+                <span>Tracking Produk</span>
+            </a>
+            <a asp-page="/ProductCatalog" class="nav-link">
+                <i class="fas fa-store"></i>
+                <span>E-Catalog</span>
+            </a>
+            <a asp-page="/Complaint" class="nav-link">
+                <i class="fas fa-exclamation-circle"></i>
+                <span>Pengaduan</span>
+            </a>
+            <a asp-page="/History" class="nav-link">
+                <i class="fas fa-history"></i>
+                <span>Riwayat Pengaduan</span>
+            </a>
+        </nav>
+
+        <a asp-page="/Account/Logout" class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="welcome-section">
+            <div class="welcome-header">
+                <h1 class="welcome-title">Selamat Datang, @User.Identity.Name!</h1>
+                <div class="date-display">
+                    <i class="far fa-clock"></i>
+                    <span>@DateTime.Now.ToString("dddd, dd MMMM yyyy - HH:mm:ss")</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div>
+                        <div class="stat-title">Profile</div>
+                        <div class="stat-value">@User.Identity.Name</div>
+                    </div>
+                </div>
+                <span class="status-badge">Active</span>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div>
+                        <div class="stat-title">Session Info</div>
+                        <div class="stat-value">Active</div>
+                    </div>
+                </div>
+                <span class="status-badge">Connected</span>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div>
+                        <div class="stat-title">Security Status</div>
+                        <div class="stat-value">Protected</div>
+                    </div>
+                </div>
+                <span class="status-badge">Secured</span>
+            </div>
+        </div>
+
+        <section class="quick-actions">
+            <h2 class="actions-title">Quick Actions</h2>
+            <div class="actions-grid">
+                <a asp-page="/Track" class="action-card">
+                    <i class="fas fa-search"></i>
+                    <span>Track Order</span>
+                </a>
+                <a asp-page="/ECatalog" class="action-card">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Lihat E-Catalog</span>
+                </a>
+                <a asp-page="/Complaint" class="action-card">
+                    <i class="fas fa-headset"></i>
+                    <span>Layanan Pengaduan</span>
+                </a>
+                <a asp-page="/History" class="action-card">
+                    <i class="fas fa-clock"></i>
+                    <span>Riwayat Pengaduan</span>
+                </a>
+            </div>
+        </section>
+    </main>
+</div>
+
+@section Styles {
+    <style>
+        :root {
+            --primary-color: #4A55A2;
+            --secondary-color: #7895CB;
+            --accent-color: #A0BFE0;
+            --background-start: #F5F7FF;
+            --background-end: #C6D7F6;
+            --text-primary: #2C3333;
+            --text-secondary: #526D82;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --success: #27A269;
+            --warning: #E5A443;
+            --danger: #E64553;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--background-start), var(--background-end));
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            box-shadow: 0 8px 32px rgba(74, 85, 162, 0.1);
+            height: calc(100vh - 2rem);
+            position: fixed;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(74, 85, 162, 0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            text-decoration: none;
+            color: var(--text-secondary);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+            .nav-link:hover {
+                background: var(--primary-color);
+                color: white;
+                transform: translateX(5px);
+            }
+
+            .nav-link i {
+                width: 24px;
+                margin-right: 1rem;
+                font-size: 1.25rem;
+            }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--danger);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            margin-top: auto;
+            transition: all 0.3s ease;
+            justify-content: center;
+            font-weight: 500;
+        }
+
+            .logout-btn:hover {
+                background: #d63031;
+                transform: translateY(-2px);
+            }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px; /* Match the sidebar width */
+            padding: 1rem;
+            width: calc(100% - 300px); /* Subtract sidebar width */
+        }
+
+        .welcome-section {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(74, 85, 162, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .welcome-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .welcome-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .date-display {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            width: 100%; /* Ensure full width */
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(74, 85, 162, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+            .stat-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 12px 40px rgba(74, 85, 162, 0.15);
+            }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .stat-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-top: 0.5rem;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background: rgba(74, 85, 162, 0.1);
+            color: var(--primary-color);
+        }
+
+        .quick-actions {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(74, 85, 162, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .actions-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .action-card {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 1.25rem;
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+            .action-card:hover {
+                background: var(--primary-color);
+                color: white;
+                transform: translateY(-3px);
+            }
+
+
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--background-start);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: var(--secondary-color);
+            }
+    </style>
+}

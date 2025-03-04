@@ -1,0 +1,24 @@
+﻿@page
+@model login.Pages.AccessDeniedModel
+@{
+    ViewData["Title"] = "Akses Ditolak";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-danger">
+        <div class="card-header bg-danger text-white">
+            <h3 class="card-title mb-0">Akses Ditolak</h3>
+        </div>
+        <div class="card-body p-4 text-center">
+            <div class="mb-4">
+                <i class="fas fa-exclamation-triangle text-danger" style="font-size: 4rem;"></i>
+            </div>
+            <h4>Maaf, Anda tidak memiliki izin untuk mengakses halaman ini.</h4>
+            <p>Anda memerlukan hak akses yang sesuai untuk melihat konten ini.</p>
+            
+            <div class="mt-4">
+                <a asp-page="/Index" class="btn btn-primary">Kembali ke Halaman Login</a>
+            </div>
+        </div>
+    </div>
+</div>
